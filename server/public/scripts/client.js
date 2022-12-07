@@ -66,8 +66,8 @@ function appendToDom(array){
     for (let item of array) {
         $('#to-do-list').append(`
             <div> 
-                <li>${item.task}</li>
-                <button class="complete">Task Complete</button>
+                ${item.task}
+                <button id="${item.task}" class="complete">Task Complete</button>
                 <button class="delete">Delete Task</button>
                 <br />
                 <br />
