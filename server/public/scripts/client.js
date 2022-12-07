@@ -10,6 +10,11 @@ function onReady() {
 
     //on-click event for submit task button
     $('#submit-task-btn').on('click', submitTask);
+
+    //future delete button function
+    // $('.delete').on('click', '#to-do-list', taskDelete);
+    //future task complete button function
+    $('#to-do-list').on('click', '.complete', taskComplete);
 }
 
 //function to POST new task to server
@@ -60,11 +65,20 @@ function appendToDom(array){
     $('#to-do-list').empty();
     for (let item of array) {
         $('#to-do-list').append(`
-            <li>${item.task}</li>
-            <button id="completed">Task Complete</button>
-            <button id="delete">Delete Task</button>
-            <br />
-            <br />
+            <div> 
+                <li>${item.task}</li>
+                <button class="complete">Task Complete</button>
+                <button class="delete">Delete Task</button>
+                <br />
+                <br />
+            </div>
         `)
     }
+}
+
+
+function taskComplete(){
+    console.log('you completed this task');
+    $(this).parent().css('background-color', 'rgb(161, 236, 150)');
+    $(this).attr('disabled', 'disabled');
 }
