@@ -22,7 +22,8 @@ function submitTask() {
             data: newTask,
         }).then(function(response){
             console.log('new task POST response from the server', response);
-
+            //get tasks here
+            getTasks();
         }).catch(function(error){
             alert(error.responseText);
             console.log(error);
