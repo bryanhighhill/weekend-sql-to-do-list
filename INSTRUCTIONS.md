@@ -1,3 +1,19 @@
+salary-calculator-server/
+├── server/
+│   ├── public/
+│   │   ├── scripts/
+│   │   │   └── client.js
+│   │   ├── vendors/
+│   │   │   └── jquery.js
+│   │   ├── styles/
+│   │   │   └── style.css
+│   │   └── index.html
+│   └── server.js
+├── node_modules/
+│   ├── express/
+│   └── ...
+└── .gitignore
+
 
 ## Weekend Challenge: SQL To-Do List
 
