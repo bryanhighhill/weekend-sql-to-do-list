@@ -11,3 +11,24 @@ function onReady() {
     //on-click event for submit task button
     $('#submit-task-btn').on('click', submitTask);
 }
+
+//function to POST new task to server
+function submitTask() {
+    let newTask = $('#task-input').val();
+    if (newTask != ''){
+        $.ajax({
+            method: 'POST',
+            url: '/tasks',
+            data: newTask,
+        }).then(function(response){
+            console.log('new task POST response from the server', response);
+
+        }).catch(function(error){
+            alert(error.responseText);
+            console.log(error);
+        });
+
+    }
+    alert('task input cannot be blank');
+
+}
