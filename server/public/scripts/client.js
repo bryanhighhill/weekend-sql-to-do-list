@@ -12,12 +12,12 @@ function onReady() {
     $('#submit-task-btn').on('click', submitTask);
 
     //future delete button function
-    // $('.delete').on('click', '#to-do-list', taskDelete);
+    $('#task-list').on('click', '.delete', taskDelete);
     //future task complete button function
-    // $('#to-do-list').on('click', '.complete', taskComplete);
+    $('#task-list').on('click', '.complete', taskComplete);
 }
 
-//function to POST new task to server
+//function to POST new task to server => db
 function submitTask() {
     let newTask = $('#task-input').val();
     if (newTask === ''){
@@ -42,7 +42,7 @@ function submitTask() {
             //clear task input value here
             $('#task-input').val('');
 
-
+        //add error catch
         }).catch(function(error){
             alert(error.responseText);
             console.log(error);
@@ -57,6 +57,8 @@ function getTasks(){
         url: '/tasks',
     }).then(function(response){
         console.log(`this is the task list GET response from server: ${response}`);
+
+        //send response table to appendToDom
         appendToDom(response);
     });
 }
@@ -75,6 +77,10 @@ function appendToDom(taskTable){
       </td>
       <td>
         ${taskTable[i].complete}      
+      </td>
+      <td>
+        <button class="complete">Task Completed</button>
+        <button class="delete">Remove Task</button>
       </td>
     </tr>
     `)}
