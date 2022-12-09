@@ -7,17 +7,30 @@
     <link rel="stylesheet" href="./styles/style.css"></script>
     <script src="./vendors/jquery.js"></script>
     <script src="./scripts/client.js"></script>
-    <title>Document</title>
+    <title>BRYAN'S TO-DO-LIST!</title>
 </head>
 <body>
     <h1><center>SQL TO-DO LIST</center></h1>
+    <hr class="solid">
     <h2 id="new-tasks">Do you have a new task to complete?</h2>
-    <input type="text" placeholder="add a new task here" id="task-input">
-    <button id="submit-task-btn">Submit Task</button>
+    <input type="text" placeholder="add a new task" id="task-input">
+    <button id="submit-task-btn">Submit New Task</button>
+    <br />
+    <br />
+    <hr class="solid">
+    <br />
+    <h2>Current Tasks</h2>
 
-    <h2 id="task-list">These are your current tasks</h2>
-    <!-- append to-do list from database here -->
-    <div class="to-do" id="to-do-list">  
-    </div>
+    <!-- create TABLE to append task list from database here -->
+    <table>
+        <thead>
+          <tr>
+            <th>Task</th>
+            <th>Complete?</th>
+          </tr>
+        </thead>
+        <tbody id="task-list">
+        </tbody>
+      </table>
 </body>
 </html>

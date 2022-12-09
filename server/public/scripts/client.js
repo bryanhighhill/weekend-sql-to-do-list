@@ -57,15 +57,28 @@ function getTasks(){
         url: '/tasks',
     }).then(function(response){
         console.log(`this is the task list GET response from server: ${response}`);
-        // appendToDom(response);
+        appendToDom(response);
     });
 }
 
 
 //function to append task list to DOM
-function appendToDom(array){
-    console.log('appendToDom function', array);
-}
+function appendToDom(taskTable){
+    console.log(`about to append db table: ${taskTable}`);
+    $('#task-list').empty();
+  // loop through table and append tasks to dom. add a COMPLETE and DELETE button
+    for (let i=0; i < taskTable.length; i++) {
+    $('#task-list').append(`
+    <tr>
+      <td>
+        ${taskTable[i].task}      
+      </td>
+      <td>
+        ${taskTable[i].complete}      
+      </td>
+    </tr>
+    `)}
+};
 
 //POST to update server with status
 // function taskComplete(){
