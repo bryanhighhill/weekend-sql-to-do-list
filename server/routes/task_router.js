@@ -25,11 +25,28 @@ pool.on('error', (error)=> {
 
 //GET request to db
 taskRouter.get('/', function(req, res) {
-    console.log('request for /tasks was made');
-    //add SQL request here
-
-    res.send();
+    console.log('GET request for task list was made');
+    //add SQL request as variable here
+    let queryText = 'SELECT * FROM tasks';
+    //new pool query with SQL
+    pool.query(queryText)
+    .then((result) => {
+        console.log(`this is your GET response from db: ${result}`);
+        //send db result to client
+        res.send(result.rows);
+    })
+    //add error catch
+    .catch((error) => {
+        console.log(`error making GET query to db: ${error}`);
+        //send error status to client
+        res.sendStatus(error);
+    })
 });
+
+
+
+
+
 
 //POST request to db
 taskRouter.post('/', function(req, res) {
@@ -58,6 +75,10 @@ taskRouter.post('/', function(req, res) {
 });
 
     
+
+
+
+
 
 
 

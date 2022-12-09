@@ -56,8 +56,8 @@ function getTasks(){
         method: 'GET',
         url: '/tasks',
     }).then(function(response){
-        console.log('this is the tasks GET response from the server', response);
-        appendToDom(response);
+        console.log(`this is the task list GET response from server: ${response}`);
+        // appendToDom(response);
     });
 }
 
