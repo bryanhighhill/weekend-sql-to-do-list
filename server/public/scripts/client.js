@@ -27,12 +27,14 @@ function submitTask() {
         $.ajax({
             method: 'POST',
             url: '/tasks',
+            //create new task object here
             data: {
                 task: newTask,
+                //have new task default be incomplete
                 complete:'no',
             }
         }).then(function(response){
-            console.log('new task POST response from the server', response);
+            console.log('new task POST response from the server: ', response);
             
             //GET tasks here
             getTasks();
