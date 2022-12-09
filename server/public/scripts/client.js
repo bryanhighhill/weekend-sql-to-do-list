@@ -14,14 +14,14 @@ function onReady() {
     //future delete button function
     // $('.delete').on('click', '#to-do-list', taskDelete);
     //future task complete button function
-    $('#to-do-list').on('click', '.complete', taskComplete);
+    // $('#to-do-list').on('click', '.complete', taskComplete);
 }
 
 //function to POST new task to server
 function submitTask() {
     let newTask = $('#task-input').val();
     if (newTask === ''){
-        alert('task input cannot be blank');
+        alert('task cannot be blank!');
         return false;
     }
         $.ajax({
@@ -29,14 +29,15 @@ function submitTask() {
             url: '/tasks',
             data: {
                 task: newTask,
+                complete:'no',
             }
         }).then(function(response){
             console.log('new task POST response from the server', response);
             
-            //get tasks here
+            //GET tasks here
             getTasks();
             
-            //clear input value here
+            //clear task input value here
             $('#task-input').val('');
 
 
@@ -62,23 +63,23 @@ function getTasks(){
 //function to append task list to DOM
 function appendToDom(array){
     console.log('appendToDom function', array);
-    $('#to-do-list').empty();
-    for (let item of array) {
-        $('#to-do-list').append(`
-            <div> 
-                ${item.task}
-                <button id="${item.task}" class="complete">Task Complete</button>
-                <button class="delete">Delete Task</button>
-                <br />
-                <br />
-            </div>
-        `)
-    }
 }
 
+//POST to update server with status
+// function taskComplete(){
+//     console.log('you completed this task');
+//     $(this).parent().css('background-color', 'rgb(161, 236, 150)');
+//     $(this).attr('disabled', 'disabled');
+//     let updatedTask = this.id;
 
-function taskComplete(){
-    console.log('you completed this task');
-    $(this).parent().css('background-color', 'rgb(161, 236, 150)');
-    $(this).attr('disabled', 'disabled');
-}
+//     $.ajax({
+//         method: 'POST',
+//         url: '/tasks',
+//         data: {
+//             task: updatedTask,
+//             status: 'complete',
+//         }
+//     }).then(function(response){
+//         console.log('new task POST response from the server', response);
+//     })
+// }
