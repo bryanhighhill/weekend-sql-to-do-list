@@ -68,27 +68,57 @@ function getTasks(){
 function appendToDom(taskTable){
     console.log(`about to append db table: ${taskTable}`);
     $('#task-list').empty();
+
   // loop through table and append tasks to dom. add a COMPLETE and DELETE button
     for (let i=0; i < taskTable.length; i++) {
-    $('#task-list').append(`
-    <tr>
-      <td>
-        ${taskTable[i].task}      
-      </td>
-      <td>
-        ${taskTable[i].complete}      
-      </td>
-      <td>
-        <button class="complete" title="${taskTable[i].task}">Task Completed</button>
-        <button class="delete" title="${taskTable[i].task}">Remove Task</button>
-      </td>
-    </tr>
-    `)}
+
+        //if statement to check completion status - INCOMPLETE
+        if(taskTable[i].complete === 'no') {
+            $('#task-list').append(`
+            <tr class="task-incomplete">
+                <td>
+                    ${taskTable[i].task}      
+                </td>
+                <td>
+                    ${taskTable[i].complete}      
+                </td>
+                <td>
+                    <button class="complete" title="${taskTable[i].task}">Task Completed</button>
+                </td>
+                <td>
+                    <button class="delete" title="${taskTable[i].task}">Remove Task</button>
+                </td>
+            </tr>
+        `)}
+
+        //if statement to check completion status - COMPLETE
+        if(taskTable[i].complete === 'yes') {
+            $('#task-list').append(`
+            <tr class="task-complete">
+                <td>
+                    ${taskTable[i].task}      
+                </td>
+                <td>
+                    ${taskTable[i].complete}, <i>task is complete!</i>      
+                </td>
+                <td>
+                    <button class="complete" title="${taskTable[i].task}">Task Incomplete</button>
+                </td>
+                <td>
+                    <button class="delete" title="${taskTable[i].task}">Remove Task</button>
+                </td>     
+            </tr>
+            `)
+        }
+    };
 };
 
 //create Task Completed button function
 function taskComplete() {
-    console.log(`clicked button to update completion status of task: ${(this).title}`);
+    console.log(`clicked button to update completion status of task: ${this.title}`);
+
+//     $(this).parent().css('background-color', 'rgb(161, 236, 150)');
+//  $(this).attr('disabled', 'disabled');
     
     //set task to update to variable
     const updateTask = (this).title;
@@ -108,7 +138,7 @@ function taskComplete() {
         console.log('new task complete POST response from the server: ', response);
         
         //GET updated tasks here
-        // getTasks();
+        getTasks();
        
     //add error catch
     }).catch(function(error){
@@ -120,7 +150,9 @@ function taskComplete() {
 }
 
 
-
+function changeBgColor(item) {
+    item.addClass('task-complete');
+}
 
 
 

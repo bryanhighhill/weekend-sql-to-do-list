@@ -1,3 +1,16 @@
-#to-do-list {
-    background-color: rgb(235, 126, 86)
+table {
+    width: 100%;
 }
+
+table,tr,th {
+    text-align: left;
+}
+
+tr.task-complete {
+    background-color: rgb(87, 197, 129);
+}
+
+tr.task-incomplete {
+    background-color: rgb(235, 126, 86);
+};
+
