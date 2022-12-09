@@ -30,25 +30,24 @@ You are going to create a 'TO DO' application. This type of application is very 
 **Here are the specific components for the challenge:**
 
 [x] * Create a front end experience that allows a user to create a Task.
-[x]    // create input to type task on index
-[x]    // create button to submit task on index
+[x]   // create input to type task on index
+[x]   // create button to submit task on index
 
 * When the Task is created, it should be stored inside of a database (SQL)
-[x]    // set up database: called task_list
-[x]    // create db table with fields: task, complete (Y/N)
-      // POST request from front end => server => db
+[x]   // set up database: called task_list
+[x]   // create db table with fields: task, complete (Y/N)
+[x]   // POST request from front end => server => db
       
 * Whenever a Task is created the front end should refresh to show all tasks that need to be completed.
-      // GET request from front => server => db
-
+[x]   // GET request from front => server => db
 
 * Each Task should have an option to 'Complete' or 'Delete'.
-      //use loop to add 'Complete' and 'Delete' buttons to each task in appendToDom function
-
+[x]   //use loop to add 'Complete' and 'Delete' buttons to each task in appendToDom function
+      //(PERSONAL STRETCH) - could make dropdown menu to submit completion status
 
 * When a Task is complete, its visual representation should change on the front end. For example, the background of the task container could change from gray to green. 
       //have color of task container change
-
+      //something else more creative??
 
 * The complete option should be  'checked off'. Each of these are accomplished in CSS, but will need to hook into logic to know whether or not the task is complete.
       //front end: disable complete button and/or toggle it with text "incomplete"

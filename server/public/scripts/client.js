@@ -11,10 +11,10 @@ function onReady() {
     //on-click event for submit task button
     $('#submit-task-btn').on('click', submitTask);
 
-    //future delete button function
-    $('#task-list').on('click', '.delete', taskDelete);
     //future task complete button function
     $('#task-list').on('click', '.complete', taskComplete);
+    //future delete button function
+    $('#task-list').on('click', '.delete', taskDelete);
 }
 
 //function to POST new task to server => db
@@ -79,12 +79,54 @@ function appendToDom(taskTable){
         ${taskTable[i].complete}      
       </td>
       <td>
-        <button class="complete">Task Completed</button>
-        <button class="delete">Remove Task</button>
+        <button class="complete" title="${taskTable[i].task}">Task Completed</button>
+        <button class="delete" title="${taskTable[i].task}">Remove Task</button>
       </td>
     </tr>
     `)}
 };
+
+//create Task Completed button function
+function taskComplete() {
+    console.log(`clicked button to update completion status of task: ${(this).title}`);
+    
+    //set task to update to variable
+    const updateTask = (this).title;
+    console.log(`test of updateTask variable: ${updateTask}`);
+
+    //make POST request to update completion status on db
+    $.ajax({
+        method: 'POST',
+        url: '/tasks',
+        //create new task object here
+        data: {
+            task: updateTask,
+            //have new task default be incomplete
+            complete:'yes',
+        }
+    }).then(function(response){
+        console.log('new task complete POST response from the server: ', response);
+        
+        //GET updated tasks here
+        // getTasks();
+       
+    //add error catch
+    }).catch(function(error){
+        alert(error.responseText);
+        console.log(error);
+    });
+
+
+}
+
+
+
+
+
+
+
+
+
 
 //POST to update server with status
 // function taskComplete(){
