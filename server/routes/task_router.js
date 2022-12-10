@@ -56,9 +56,10 @@ taskRouter.post('/', function(req, res) {
     const newTask = req.body; 
     const task = req.body.task;
     const status = req.body.complete;
+    const title = req.body.title;
 
     //if statement to capture if data is a new task
-    if (status === 'no' ) {
+    if (task && status === 'no') {
     //add SQL insert as variable here
         const queryText = `
         INSERT INTO "tasks" ("task", "complete")
@@ -79,13 +80,13 @@ taskRouter.post('/', function(req, res) {
                 res.sendStatus(error);
         });
     }
-    //if statement to capture if data is to be UPDATED
-    if (status === 'yes' ) {
+    //if statement to capture if data status is to be UPDATED to YES
+    if (title && status === 'yes') {
         //add SQL insert as variable here
         const queryText = `
-        UPDATE "tasks" SET "complete"='yes' WHERE "task"='${task}';
+        UPDATE "tasks" SET "complete"='yes' WHERE "task"='${title}';
         `;
-        console.log(`you are updating task: ${task}`);
+        console.log(`you are updating status of: ${title} to complete`);
     
         //make pool query to db here with SQL variable
         pool.query(queryText)
@@ -100,6 +101,26 @@ taskRouter.post('/', function(req, res) {
                 res.sendStatus(error);
         });
     }
+    if (title && status === 'no') {
+        //add SQL insert as variable here
+        const queryText = `
+        UPDATE "tasks" SET "complete"='no' WHERE "task"='${title}';
+        `;
+        console.log(`you are updating ${task} to incomplete`);
+    
+        //make pool query to db here with SQL variable
+            pool.query(queryText)
+            .then((result) => {
+                //send new task POST created status here
+                res.sendStatus(201); 
+            })
+            //add error CATCH here
+                .catch((error) => {
+                    console.log('error making new task POST query: ', error);
+                    //send server status error
+                    res.sendStatus(error);
+            });
+        }
 });
 
 
