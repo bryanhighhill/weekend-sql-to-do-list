@@ -13,11 +13,11 @@ function onReady() {
 
     //future task complete button function
     $('#task-list').on('click', '.complete-btn', taskComplete);
-    //future delete button function
-    // $('#task-list').on('click', '.delete', taskDelete);
     //future task incomplete button function
     $('#task-list').on('click', '.incomplete-btn', taskIncomplete);
-}
+    //future delete button function
+    $('#task-list').on('click', '.delete', taskDelete);
+};
 
 //function to POST new task to server => db
 function submitTask() {
@@ -49,8 +49,7 @@ function submitTask() {
             alert(error.responseText);
             console.log(error);
         });
-}
-
+};
 
 //function to GET tasks from server/database
 function getTasks(){
@@ -60,24 +59,25 @@ function getTasks(){
     }).then(function(response){
         console.log(`this is the task list GET response from server: ${response}`);
 
+        //sort response in order of id
+        let sortedResponse = response.sort((a,b) => a.id - b.id);
+
         //send response table to appendToDom
-        appendToDom(response);
+        appendToDom(sortedResponse);
     });
-}
+};
 
 
 //function to append task list to DOM
 function appendToDom(taskTable){
     console.log(`about to append db table: ${taskTable}`);
     $('#task-list').empty();
-    //future task incomplete button function
     
     // loop through table and append tasks to dom. add a COMPLETE and DELETE button
     for (let i=0; i < taskTable.length; i++) {
         
         //if statement to check completion status - INCOMPLETE
         if(taskTable[i].complete === 'no') {
-            // $('#task-list').on('click', '.complete-btn', taskComplete);
             $('#task-list').append(`
             <tr class="task-incomplete">
                 <td>
@@ -97,7 +97,6 @@ function appendToDom(taskTable){
 
         //if statement to check completion status - COMPLETE
         if(taskTable[i].complete === 'yes') {
-            // $('#task-list').on('click', '.incomplete-btn', taskIncomplete);
             $('#task-list').append(`
             <tr class="task-complete">
                 <td>
@@ -115,26 +114,6 @@ function appendToDom(taskTable){
             </tr>
             `)
         }
-        // if(taskTable[i].complete === 'no' && taskTable[i].statusChange === 'yes') {
-        //     $('#task-list').on('click', '.incomplete-btn', taskIncomplete);
-        //     $('#task-list').on('click', '.complete-btn', taskComplete);
-        //     $('#task-list').append(`
-        //     <tr class="task-incomplete">
-        //         <td>
-        //             ${taskTable[i].task}      
-        //         </td>
-        //         <td>
-        //             ${taskTable[i].complete}, <i>task is incomplete</i>      
-        //         </td>
-        //         <td>
-        //             <button class="complete-btn" id="${taskTable[i].task}">Change Task Status</button>
-        //         </td>
-        //         <td>
-        //             <button class="delete" title="${taskTable[i].task}">Remove Task</button>
-        //         </td>     
-        //     </tr>
-        //     `)
-        // }
     };
 };
 
@@ -145,8 +124,6 @@ function taskComplete() {
     //set task to update to variable
     const updateTask = (this).title;
     console.log(`test of updateTask variable: ${updateTask}`);
-
-    // $('#(this).id').removeClass('task-incomplete').addClass('task-complete');
 
     //make POST request to update completion status on db
     $.ajax({
@@ -200,32 +177,31 @@ function taskIncomplete() {
         alert(error.responseText);
         console.log(error);
     });
+};
 
+//creat task DELETE function
+function taskDelete() {
+    console.log(`you want to delete ${this.title}`);
 
-}
+    const deleteTask = (this).title;
 
-
-
-
-
-
-
-
-//POST to update server with status
-// function taskComplete(){
-//     console.log('you completed this task');
-//     $(this).parent().css('background-color', 'rgb(161, 236, 150)');
-//     $(this).attr('disabled', 'disabled');
-//     let updatedTask = this.id;
-
-//     $.ajax({
-//         method: 'POST',
-//         url: '/tasks',
-//         data: {
-//             task: updatedTask,
-//             status: 'complete',
-//         }
-//     }).then(function(response){
-//         console.log('new task POST response from the server', response);
-//     })
-// }
+    //make DELETE request to delete task from db
+    $.ajax({
+        method: 'DELETE',
+        url: '/tasks',
+        //create new task object here
+        data: {
+            title: deleteTask,
+        }
+    }).then(function(response){
+        console.log('revert task to incomplete POST response from the server: ', response);
+        
+        //GET updated tasks here
+        getTasks();
+       
+    //add error catch
+    }).catch(function(error){
+        alert(error.responseText);
+        console.log(error);
+    });
+};

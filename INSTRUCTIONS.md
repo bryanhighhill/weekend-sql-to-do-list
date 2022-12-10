@@ -43,21 +43,20 @@ You are going to create a 'TO DO' application. This type of application is very 
 
 * Each Task should have an option to 'Complete' or 'Delete'.
 [x]   //use loop to add 'Complete' and 'Delete' buttons to each task in appendToDom function
-      //(PERSONAL STRETCH) - could make dropdown menu to submit completion status
 
 * When a Task is complete, its visual representation should change on the front end. For example, the background of the task container could change from gray to green. 
-      //have color of task container change
-      //something else more creative??
+[x]   //have color of task container change
+[x]   //changes text of is the task complete? column
 
 * The complete option should be  'checked off'. Each of these are accomplished in CSS, but will need to hook into logic to know whether or not the task is complete.
-      //front end: disable complete button and/or toggle it with text "incomplete"
-      //POST - GET request when button has been pressed
+[x]   //front end: disable complete button and/or toggle it with text "incomplete"
+[x]   //POST - GET request when button has been pressed
 
 * Whether or not a Task is complete should also be stored in the database.
-      // POST request made with task once complete button has been pressed
+[x]   // POST request made with task once complete button has been pressed
 
 * Deleting a Task should remove it both from the front end as well as the Database.
-      //DELETE request from front end => server => db
+ [x]  //DELETE request from front end => server => db
 
 ### Styling
 
@@ -72,11 +71,11 @@ We would recommend you spend some time thinking about how to approach this probl
 
 ### Create a Database
 
-Be sure to create a new database through Postico. Use the name `weekend-to-do-app`. You will need to use this name in your database connection configuration on your server.
+[x] Be sure to create a new database through Postico. Use the name `weekend-to-do-app`. You will need to use this name in your database connection configuration on your server.
 
 ### Database Structure
 
-Please include a `database.sql` text file in your repo that includes all of your `CREATE TABLE` queries. This is so we can re-create your database while testing your app.
+[x] Please include a `database.sql` text file in your repo that includes all of your `CREATE TABLE` queries. This is so we can re-create your database while testing your app.
 
 ## Stretch Goals
 
