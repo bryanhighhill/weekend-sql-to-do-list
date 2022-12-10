@@ -56,7 +56,7 @@ You are going to create a 'TO DO' application. This type of application is very 
 [x]   // POST request made with task once complete button has been pressed
 
 * Deleting a Task should remove it both from the front end as well as the Database.
- [x]  //DELETE request from front end => server => db
+[x]  //DELETE request from front end => server => db
 
 ### Styling
 
@@ -67,7 +67,7 @@ Use CSS styling to move the aesthetic of the page beyond the vanilla HTML look:
 
 ### Approach
 
-We would recommend you spend some time thinking about how to approach this problem. Think through all the logic that will be needed prior to writing any code. Take your time, relax, remember that impostor syndrome is real, and that you are capable of knocking this out of the park!
+[x] We would recommend you spend some time thinking about how to approach this problem. Think through all the logic that will be needed prior to writing any code. Take your time, relax, remember that impostor syndrome is real, and that you are capable of knocking this out of the park!
 
 ### Create a Database
 

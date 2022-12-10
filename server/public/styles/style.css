@@ -2,15 +2,32 @@ table {
     width: 100%;
 }
 
-table,tr,th {
-    text-align: left;
-}
+/* #task-list {
+    column-count: 4;
+} */
 
-tr.task-complete {
+.task-complete {
     background-color: rgb(87, 197, 129);
+    text-align: center;
+    border-style: solid;
+    width: 25%;
+    padding-top: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    overflow-wrap: break-word; 
 }
 
-tr.task-incomplete {
-    background-color: rgb(235, 126, 86);
+.task-incomplete {
+    background-color: rgb(250, 244, 194);
+    text-align: center;
+    border-style: solid;
+    border-color: rgb(239, 120, 46);
+    width: 25%;
+    padding-top: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    overflow-wrap: break-word;
 };
 

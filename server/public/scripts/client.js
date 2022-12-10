@@ -79,39 +79,37 @@ function appendToDom(taskTable){
         //if statement to check completion status - INCOMPLETE
         if(taskTable[i].complete === 'no') {
             $('#task-list').append(`
-            <tr class="task-incomplete">
-                <td>
+            <div class="task-incomplete">
+                <h2>
                     ${taskTable[i].task}      
-                </td>
-                <td>
-                    ${taskTable[i].complete}, task in incomplete      
-                </td>
-                <td>
-                    <button class="complete-btn" title="${taskTable[i].task}">COMPLETE</button>
-                </td>
-                <td>
-                    <button class="delete" title="${taskTable[i].task}">Remove Task</button>
-                </td>
-            </tr>
+                </h2>
+                <i>task is incomplete</i>      
+                <br />
+                <br />
+                <button class="complete-btn" title="${taskTable[i].task}">Mark as complete</button>
+                <button class="delete" title="${taskTable[i].task}">Remove Task</button>
+                <br />
+                <br />
+            </div>
+            <br />
         `)}
 
         //if statement to check completion status - COMPLETE
         if(taskTable[i].complete === 'yes') {
             $('#task-list').append(`
-            <tr class="task-complete">
-                <td>
+            <div class="task-complete">
+                <h2>
                     ${taskTable[i].task}      
-                </td>
-                <td>
-                    ${taskTable[i].complete}, <i>task is complete!</i>      
-                </td>
-                <td>
-                    <button class="incomplete-btn" title="${taskTable[i].task}">INCOMPLETE</button>
-                </td>
-                <td>
-                    <button class="delete" title="${taskTable[i].task}">Remove Task</button>
-                </td>     
-            </tr>
+                </h2>
+                <i>task is complete!</i>      
+                <br />
+                <br />
+                <button class="incomplete-btn" title="${taskTable[i].task}">INCOMPLETE</button>
+                <button class="delete" title="${taskTable[i].task}">Remove Task</button>
+                <br />
+                <br />     
+            </div>
+            <br />
             `)
         }
     };
