@@ -34,7 +34,7 @@ You are going to create a 'TO DO' application. This type of application is very 
 [x]   // create button to submit task on index
 
 * When the Task is created, it should be stored inside of a database (SQL)
-[x]   // set up database: called task_list
+[x]   // set up database: called `weekend-to-do-app`
 [x]   // create db table with fields: task, complete (Y/N)
 [x]   // POST request from front end => server => db
       
@@ -46,7 +46,7 @@ You are going to create a 'TO DO' application. This type of application is very 
 
 * When a Task is complete, its visual representation should change on the front end. For example, the background of the task container could change from gray to green. 
 [x]   //have color of task container change
-[x]   //changes text of is the task complete? column
+[x]   //changes text of is the task status
 
 * The complete option should be  'checked off'. Each of these are accomplished in CSS, but will need to hook into logic to know whether or not the task is complete.
 [x]   //front end: disable complete button and/or toggle it with text "incomplete"
@@ -61,9 +61,9 @@ You are going to create a 'TO DO' application. This type of application is very 
 ### Styling
 
 Use CSS styling to move the aesthetic of the page beyond the vanilla HTML look:
-  - background color of the page
-  - font family and size
-  - text color & or background color of tasks *to show whether or not they have been completed*
+[x]  - background color of the page
+[x]  - font family and size
+[x]  - text color & or background color of tasks *to show whether or not they have been completed*
 
 ### Approach
 
