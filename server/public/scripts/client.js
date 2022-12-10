@@ -91,7 +91,6 @@ function appendToDom(taskTable){
                 <br />
                 <br />
             </div>
-            <br />
         `)}
 
         //if statement to check completion status - COMPLETE
@@ -104,12 +103,11 @@ function appendToDom(taskTable){
                 <i>task is complete!</i>      
                 <br />
                 <br />
-                <button class="incomplete-btn" title="${taskTable[i].task}">INCOMPLETE</button>
+                <button class="incomplete-btn" title="${taskTable[i].task}">Mark as incomplete</button>
                 <button class="delete" title="${taskTable[i].task}">Remove Task</button>
                 <br />
                 <br />     
             </div>
-            <br />
             `)
         }
     };
