@@ -52,6 +52,7 @@ taskRouter.post('/', function(req, res) {
     const task = req.body.task;
     const status = req.body.complete;
     const title = req.body.title;
+    const idNo = req.body.idNo;
 
     //if statement to capture if data is a new task
     if (task && status === 'no') {
@@ -79,9 +80,9 @@ taskRouter.post('/', function(req, res) {
     if (title && status === 'yes') {
         //add SQL insert as variable here
         const queryText = `
-        UPDATE "tasks" SET "complete"='yes' WHERE "task"='${title}';
+        UPDATE "tasks" SET "complete"='yes' WHERE "task"='${title}' AND "id"=${idNo};
         `;
-        console.log(`you are updating status of: ${title} to complete`);
+        console.log(`you are updating status of: "${title}" with ID number "${idNo}" to complete`);
     
         //make pool query to db here with SQL variable
         pool.query(queryText)
@@ -99,9 +100,9 @@ taskRouter.post('/', function(req, res) {
     if (title && status === 'no') {
         //add SQL insert as variable here
         const queryText = `
-        UPDATE "tasks" SET "complete"='no' WHERE "task"='${title}';
+        UPDATE "tasks" SET "complete"='no' WHERE "task"='${title}' AND "id"=${idNo};
         `;
-        console.log(`you are updating ${task} to incomplete`);
+        console.log(`you are updating ${task} with ID number ${idNo} to incomplete`);
     
         //make pool query to db here with SQL variable
             pool.query(queryText)
@@ -123,7 +124,7 @@ taskRouter.delete('/', function(req, res) {
     console.log(`DELETE request for task list was made for ${req.body}`);
     //add SQL request as variable here
     let queryText = `
-    DELETE FROM tasks WHERE task='${req.body.title}';
+    DELETE FROM tasks WHERE task='${req.body.title}' AND "id"=${req.body.idNo};
     `;
     //new pool query with SQL
     pool.query(queryText)

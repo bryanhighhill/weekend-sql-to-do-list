@@ -16,6 +16,19 @@ body {
 
 #task-input {
     width: 50%;
+    height:30px
+}
+
+#task-input,
+input::placeholder {
+    font: 20px/3 sans-serif;
+}
+
+#submit-task-btn {
+    height: 2.2rem;
+    font-size: 1.2em;
+    background-color: rgb(247, 238, 159);
+    border-radius: 10px;
 }
 
 .task-complete {

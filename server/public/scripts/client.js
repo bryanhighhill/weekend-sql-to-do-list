@@ -86,8 +86,8 @@ function appendToDom(taskTable){
                 <i>task is incomplete</i>      
                 <br />
                 <br />
-                <button class="complete-btn" title="${taskTable[i].task}">Mark as complete</button>
-                <button class="delete" title="${taskTable[i].task}">Remove Task</button>
+                <button id="${taskTable[i].id}" class="complete-btn" title="${taskTable[i].task}">Mark as complete</button>
+                <button id="${taskTable[i].id}" class="delete" title="${taskTable[i].task}">Remove Task</button>
                 <br />
                 <br />
             </div>
@@ -103,8 +103,8 @@ function appendToDom(taskTable){
                 <i>task is complete!</i>      
                 <br />
                 <br />
-                <button class="incomplete-btn" title="${taskTable[i].task}">Mark as incomplete</button>
-                <button class="delete" title="${taskTable[i].task}">Remove Task</button>
+                <button id="${taskTable[i].id}" class="incomplete-btn" title="${taskTable[i].task}">Mark as incomplete</button>
+                <button id="${taskTable[i].id}" class="delete" title="${taskTable[i].task}">Remove Task</button>
                 <br />
                 <br />     
             </div>
@@ -115,11 +115,14 @@ function appendToDom(taskTable){
 
 //create Task Completed button function
 function taskComplete() {
-    console.log(`clicked button to update completion status of task: ${this.title} to complete`);
+    console.log(`clicked button to update completion status of task: "${this.title}" to complete`);
+    console.log(`this should be the unique id from task: ${this.id}`);
   
     //set task to update to variable
     const updateTask = (this).title;
+    const taskId = (this).id;
     console.log(`test of updateTask variable: ${updateTask}`);
+    console.log(`id: ${taskId}`);
 
     //make POST request to update completion status on db
     $.ajax({
@@ -130,6 +133,7 @@ function taskComplete() {
             title: updateTask,
             //have new task default be incomplete
             complete:'yes',
+            idNo: taskId,
         }
     }).then(function(response){
         console.log('new task complete POST response from the server: ', response);
@@ -150,7 +154,9 @@ function taskIncomplete() {
  
     //set task to update to variable
     const updateTask = (this).title;
+    const taskId = (this).id;
     console.log(`test of updateTask variable: ${updateTask}`);
+    console.log(`test of updateTask id: ${taskId}`);
 
     //make POST request to update completion status on db
     $.ajax({
@@ -161,6 +167,7 @@ function taskIncomplete() {
             title: updateTask,
             //have new task default be incomplete
             complete:'no',
+            idNo: taskId,
         }
     }).then(function(response){
         console.log('revert task to incomplete POST response from the server: ', response);
@@ -177,9 +184,10 @@ function taskIncomplete() {
 
 //creat task DELETE function
 function taskDelete() {
-    console.log(`you want to delete ${this.title}`);
+    console.log(`you want to delete ${this.title} with ID no: ${this.id}`);
 
     const deleteTask = (this).title;
+    const taskId = (this).id;
 
     //make DELETE request to delete task from db
     $.ajax({
@@ -188,6 +196,7 @@ function taskDelete() {
         //create new task object here
         data: {
             title: deleteTask,
+            idNo: taskId,
         }
     }).then(function(response){
         console.log('revert task to incomplete POST response from the server: ', response);
