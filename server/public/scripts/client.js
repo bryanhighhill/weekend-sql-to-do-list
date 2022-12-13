@@ -80,16 +80,18 @@ function appendToDom(taskTable){
         if(taskTable[i].complete === 'no') {
             $('#task-list').append(`
             <div class="task-incomplete">
-                <h2>
-                    ${taskTable[i].task}      
-                </h2>
-                <i>task is incomplete</i>      
-                <br />
-                <br />
-                <button id="${taskTable[i].id}" class="complete-btn" title="${taskTable[i].task}">Mark as complete</button>
-                <button id="${taskTable[i].id}" class="delete" title="${taskTable[i].task}">Remove Task</button>
-                <br />
-                <br />
+                <div id="pattern-incomplete">
+                    <h2>
+                        ${taskTable[i].task}      
+                    </h2>
+                    <i>task is incomplete</i>      
+                    <br />
+                    <br />
+                    <button id="${taskTable[i].id}" class="complete-btn" title="${taskTable[i].task}">Mark as complete</button>
+                    <button id="${taskTable[i].id}" class="delete" title="${taskTable[i].task}">Remove Task</button>
+                    <br />
+                    <br />
+                </div>
             </div>
         `)}
 
@@ -97,16 +99,18 @@ function appendToDom(taskTable){
         if(taskTable[i].complete === 'yes') {
             $('#task-list').append(`
             <div class="task-complete">
-                <h2>
-                    ${taskTable[i].task}      
-                </h2>
-                <i>task is complete!</i>      
-                <br />
-                <br />
-                <button id="${taskTable[i].id}" class="incomplete-btn" title="${taskTable[i].task}">Mark as incomplete</button>
-                <button id="${taskTable[i].id}" class="delete" title="${taskTable[i].task}">Remove Task</button>
-                <br />
-                <br />     
+                <div id="pattern">
+                    <h2>
+                        ${taskTable[i].task}      
+                    </h2>
+                    <i>task is complete!</i>      
+                    <br />
+                    <br />
+                    <button id="${taskTable[i].id}" class="incomplete-btn" title="${taskTable[i].task}">Mark as incomplete</button>
+                    <button id="${taskTable[i].id}" class="delete" title="${taskTable[i].task}">Remove Task</button>
+                    <br />
+                    <br />     
+                </div>
             </div>
             `)
         }
