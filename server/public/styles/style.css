@@ -1,13 +1,15 @@
 body {
-   background-color: rgb(173, 225, 249);
+   background-color: white;
    font-family: Arial, Helvetica, sans-serif;
    font-size: medium;
 }
 
-/* ------------------------------------------------------------------------------------------------------------- */
+#intro {
+    background-color: white;
+}
 
 #new-task-submission {
-    background-color: rgb(86, 180, 224);
+    background-color: rgb(255, 250, 197);
 }
 
 #task-input {
@@ -21,10 +23,13 @@ input::placeholder {
 }
 
 #submit-task-btn {
-    height: 2.2rem;
-    font-size: 1.2em;
-    background-color: rgb(247, 238, 159);
+    height: 35px;
+    font-size: 15px;
+    background-color: rgb(60, 112, 23);
     border-radius: 10px;
+    color: white;
+    border: none;
+    box-shadow: 0px 0px 3px 2px rgb(29, 30, 29);
 }
 
 #task-list {
@@ -41,7 +46,7 @@ input::placeholder {
     border-radius: 10px;
     border-width: 2px;
     width: 95%;
-    padding-top: 5px;
+    padding-top: 0px;
     padding-right: 5px;
     padding-bottom: 5px;
     padding-left: 5px;
@@ -50,39 +55,28 @@ input::placeholder {
     position: relative;
 }
 
-/* .task-complete::before {
-    content: '';
-    width: 2px;
-    height: 100%;
-    background-color: rgba(255,0,0,0.6);
-    position: absolute;
-    top: 0;
-    left: 20px;
-} */
-
 #pattern {
     height: 90%;
-    background-image: repeating-linear-gradient(rgb(146, 203, 168) 0px, rgb(146, 203, 168) 25px, teal 26px);
+    background-image: repeating-linear-gradient(rgb(146, 203, 168) 0px, rgb(146, 203, 168) 23px, teal 24px);
 }
 
 #pattern-incomplete {
     height: 90%;
-    background-image: repeating-linear-gradient(rgb(250, 244, 194) 0px, rgb(250, 244, 194) 25px, teal 26px);
+    background-image: repeating-linear-gradient(rgb(255, 250, 197) 0px, rgb(255, 250, 197) 23px, teal 24px);
 }
 .task-incomplete {
-    background-color: rgb(250, 244, 194);
+    background-color: rgb(255, 250, 197);
     text-align: center;
     border-style: solid;
-    border-color: rgb(239, 120, 46);
+    border-color: rgb(252, 197, 163);
     border-radius: 10px;
     border-width: 2px;
     width: 95%;
-    padding-top: 5px;
+    padding-top: 0px;
     padding-right: 5px;
     padding-bottom: 5px;
     padding-left: 5px;
     overflow-wrap: break-word;
-    box-shadow: 0px 0px 15px 0px rgb(255, 230, 0);
     position: relative;
 };
 
