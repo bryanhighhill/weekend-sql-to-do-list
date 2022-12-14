@@ -1,27 +1,11 @@
 let express = require('express');
 let taskRouter = express.Router();
+
 const serverFunctions = require('../modules/taskList');
+const pool = require('../modules/pool');
 
-const pg = require('pg');
 
-const Pool = pg.Pool;
-
-// DB CONNECTION
-const pool = new Pool({
-    database: 'weekend-to-do-app',
-    host: 'localhost',
-    port: 5432,
-    max: 10,
-    idleTimeoutMillis: 30000, 
-});
-
-pool.on('connect', ()=> {
-    console.log('postgres is connected');
-});
-
-pool.on('error', (error)=> {
-    console.log('error connecting to the database: ', error);
-});
+// -------------------------------------------------------------------------- GET REQUESTS ------------------------------
 
 //GET request to db
 taskRouter.get('/', function(req, res) {
@@ -42,6 +26,24 @@ taskRouter.get('/', function(req, res) {
         res.sendStatus(error);
     })
 });
+
+//GET REQUEST TO DB TARGETING ID
+taskRouter.get('/:id', (req, res) => {
+    console.log(`hello from get id request, ${req.params.id}`);
+    const queryText = `Select * from tasks WHERE id = ${req.params.id};`;
+    pool.query(queryText)
+    .then((result) => {
+        console.log('results from DB', result);
+        res.send(result.rows);
+    })
+    .catch((error) => {
+        console.log('error making a query: ', error);
+        res.sendStatus(500);
+    });
+});
+
+
+// -------------------------------------------------------------------------- POST REQUESTS ------------------------------
 
 //POST request to db
 taskRouter.post('/', function(req, res) {
@@ -119,21 +121,42 @@ taskRouter.post('/', function(req, res) {
         }
 });
 
-//DELETE route to db
+
+// -------------------------------------------------------------------------- DELETE REQUESTS ------------------------------
+
+//DELETE REQUEST TO DB - NEW ONE
+// taskRouter.delete('/:id', (req, res) => {
+//     let reqId= req.params.id;
+//     console.log(`delete request was made for ${req.params.id}`);
+
+//     const queryText = `DELETE from tasks WHERE id = ${req.params.id};`;
+
+//     pool.query(queryText, [reqId])
+//     .then((result) => {
+//         console.log('task deleted');
+//         res.sendStatus(204);
+//     })
+//     .catch((error) => {
+//         console.log(`error making a query: ${queryText}, has error: ${error}`);
+//         res.sendStatus(500);
+//     })
+// })
+
+//------------------------DELETE ROUTE TO DB - HOW I GOT IT TO WORK BEFORE OUR LECTURE ON DELETE ROUTES
 taskRouter.delete('/', function(req, res) {
     console.log(`DELETE request for task list was made for ${req.body}`);
-    //add SQL request as variable here
+    // add SQL request as variable here
     let queryText = `
     DELETE FROM tasks WHERE task='${req.body.title}' AND "id"=${req.body.idNo};
     `;
-    //new pool query with SQL
+    // new pool query with SQL
     pool.query(queryText)
     .then((result) => {
         console.log(`this is your DELETE response from db: ${result}`);
         //send db result to client
         res.send(result.rows);
     })
-    //add error catch
+    // add error catch
     .catch((error) => {
         console.log(`error making GET query to db: ${error}`);
         //send error status to client

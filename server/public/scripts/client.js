@@ -196,19 +196,20 @@ function taskDelete() {
     //make DELETE request to delete task from db
     $.ajax({
         method: 'DELETE',
-        url: '/tasks',
-        //create new task object here
+        url: '/tasks', //'/tasks/:id
+        // create new task object here
         data: {
             title: deleteTask,
             idNo: taskId,
         }
+        // success: getTasks(),
     }).then(function(response){
         console.log('revert task to incomplete POST response from the server: ', response);
         
-        //GET updated tasks here
+        // GET updated tasks here
         getTasks();
        
-    //add error catch
+    // add error catch
     }).catch(function(error){
         alert(error.responseText);
         console.log(error);
