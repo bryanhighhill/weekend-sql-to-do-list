@@ -18,6 +18,7 @@ taskRouter.get('/', function(req, res) {
         console.log(`this is your GET response from db: ${result}`);
         //send db result to client
         res.send(result.rows);
+        res.sendStatus(200);
     })
     //add error catch
     .catch((error) => {
@@ -34,6 +35,7 @@ taskRouter.get('/:id', (req, res) => {
     pool.query(queryText)
     .then((result) => {
         console.log('results from DB', result);
+        res.sendStatus(200);
         res.send(result.rows);
     })
     .catch((error) => {
