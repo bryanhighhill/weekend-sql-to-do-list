@@ -1,7 +1,6 @@
 let express = require('express');
 let taskRouter = express.Router();
 
-const serverFunctions = require('../modules/taskList');
 const pool = require('../modules/pool');
 
 
@@ -36,13 +35,13 @@ taskRouter.post('/', function (req, res) {
      const task = req.body.task;
      const status = req.body.complete;
          
-    //add SQL insert as variable here
+    //add SQL insert as variable here - SANITIZE!
     const queryText = `
     INSERT INTO "tasks" ("task", "complete")
-    VALUES ('${task}', '${status}');`;
+    VALUES ($1, $2);`;
     
     //make pool query to db here with SQL variable
-    pool.query(queryText)
+    pool.query(queryText, [task, status])
     .then((result) => {
         //send new task POST created status here
         res.sendStatus(201); 

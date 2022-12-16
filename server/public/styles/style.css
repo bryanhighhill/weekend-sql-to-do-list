@@ -121,7 +121,6 @@ input::placeholder {
 .task-complete:hover {
     transform: scale(1.5);
     z-index: 1;
-    transition: .1s;
 }
 
 
@@ -134,7 +133,6 @@ input::placeholder {
 .task-incomplete:hover {
     transform: scale(1.5);
     z-index: 1;
-    transition: .1s;
 }
 
 .task-incomplete {
