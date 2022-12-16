@@ -18,7 +18,6 @@ taskRouter.get('/', function(req, res) {
         console.log(`this is your GET response from db: ${result}`);
         //send db result to client
         res.send(result.rows);
-        res.sendStatus(200);
     })
     //add error catch
     .catch((error) => {
@@ -28,100 +27,163 @@ taskRouter.get('/', function(req, res) {
     })
 });
 
-//GET REQUEST TO DB TARGETING ID
-taskRouter.get('/:id', (req, res) => {
-    console.log(`hello from get id request, ${req.params.id}`);
-    const queryText = `Select * from tasks WHERE id = ${req.params.id};`;
-    pool.query(queryText)
-    .then((result) => {
-        console.log('results from DB', result);
-        res.sendStatus(200);
-        res.send(result.rows);
-    })
-    .catch((error) => {
-        console.log('error making a query: ', error);
-        res.sendStatus(500);
-    });
-});
+//-----------------------------------------------------------------------GET REQUEST TO DB TARGETING ID
+// taskRouter.get('/:id', (req, res) => {
+//     console.log(`hello from get id request, ${req.params.id}`);
+//     const queryText = `Select * from tasks WHERE id = ${req.params.id};`;
+//     pool.query(queryText)
+//     .then((result) => {
+//         console.log('results from DB', result);
+//         res.send(result.rows);
+//     })
+//     .catch((error) => {
+//         console.log('error making a query: ', error);
+//         res.sendStatus(500);
+//     });
+// });
 
 
 // -------------------------------------------------------------------------- POST REQUESTS ------------------------------
 
-//POST request to db
-taskRouter.post('/', function(req, res) {
+taskRouter.post('/', function (req, res) {
     console.log(`in the newupdate task POST request with ${req.body.task} and completion status: ${req.body.complete}`);
-    
-    //make variables for req.body
-    const newTask = req.body; 
-    const task = req.body.task;
-    const status = req.body.complete;
-    const title = req.body.title;
-    const idNo = req.body.idNo;
-
-    //if statement to capture if data is a new task
-    if (task && status === 'no') {
+     //make variables for req.body
+     const task = req.body.task;
+     const status = req.body.complete;
+         
     //add SQL insert as variable here
-        const queryText = `
-        INSERT INTO "tasks" ("task", "complete")
-        VALUES ('${task}', '${status}');
-        `;
-        console.log(`you are creating new task: ${task}`);
+    const queryText = `
+    INSERT INTO "tasks" ("task", "complete")
+    VALUES ('${task}', '${status}');`;
+    
+    //make pool query to db here with SQL variable
+    pool.query(queryText)
+    .then((result) => {
+        //send new task POST created status here
+        res.sendStatus(201); 
+    })
+    //add error CATCH here
+        .catch((error) => {
+            console.log('error making new task POST query: ', error);
+            //send server status error
+            res.sendStatus(error);
+        })
+ })
 
-        //make pool query to db here with SQL variable
-        pool.query(queryText)
-        .then((result) => {
-            //send new task POST created status here
-            res.sendStatus(201); 
-        })
-        //add error CATCH here
-            .catch((error) => {
-                console.log('error making new task POST query: ', error);
-                //send server status error
-                res.sendStatus(error);
-        });
-    }
-    //if statement to capture if data status is to be UPDATED to YES
-    if (title && status === 'yes') {
-        //add SQL insert as variable here
-        const queryText = `
-        UPDATE "tasks" SET "complete"='yes' WHERE "task"='${title}' AND "id"=${idNo};
-        `;
-        console.log(`you are updating status of: "${title}" with ID number "${idNo}" to complete`);
+//--------- POST request to db - this is how i got the app to work before learning about PUT - IT WORKED!
+
+// taskRouter.post('/', function(req, res) {
+//     console.log(`in the newupdate task POST request with ${req.body.task} and completion status: ${req.body.complete}`);
     
-        //make pool query to db here with SQL variable
-        pool.query(queryText)
-        .then((result) => {
-            //send new task POST created status here
-            res.sendStatus(201); 
-        })
-        //add error CATCH here
-            .catch((error) => {
-                console.log('error making new task POST query: ', error);
-                //send server status error
-                res.sendStatus(error);
-        });
-    }
-    if (title && status === 'no') {
-        //add SQL insert as variable here
-        const queryText = `
-        UPDATE "tasks" SET "complete"='no' WHERE "task"='${title}' AND "id"=${idNo};
-        `;
-        console.log(`you are updating ${task} with ID number ${idNo} to incomplete`);
+//     //make variables for req.body
+//     const newTask = req.body; 
+//     const task = req.body.task;
+//     const status = req.body.complete;
+//     const title = req.body.title;
+//     const idNo = req.body.idNo;
+
+//     //if statement to capture if data is a new task
+//     if (task && status === 'no') {
+//     //add SQL insert as variable here
+//         const queryText = `
+//         INSERT INTO "tasks" ("task", "complete")
+//         VALUES ('${task}', '${status}');
+//         `;
+//         console.log(`you are creating new task: ${task}`);
+
+//         //make pool query to db here with SQL variable
+//         pool.query(queryText)
+//         .then((result) => {
+//             //send new task POST created status here
+//             res.sendStatus(201); 
+//         })
+//         //add error CATCH here
+//             .catch((error) => {
+//                 console.log('error making new task POST query: ', error);
+//                 //send server status error
+//                 res.sendStatus(error);
+//         });
+//     }
+//     //if statement to capture if data status is to be UPDATED to YES
+//     if (title && status === 'yes') {
+//         //add SQL insert as variable here
+//         const queryText = `
+//         UPDATE "tasks" SET "complete"='yes' WHERE "task"='${title}' AND "id"=${idNo};
+//         `;
+//         console.log(`you are updating status of: "${title}" with ID number "${idNo}" to complete`);
     
-        //make pool query to db here with SQL variable
-            pool.query(queryText)
-            .then((result) => {
-                //send new task POST created status here
-                res.sendStatus(201); 
-            })
-            //add error CATCH here
-                .catch((error) => {
-                    console.log('error making new task POST query: ', error);
-                    //send server status error
-                    res.sendStatus(error);
-            });
+//         //make pool query to db here with SQL variable
+//         pool.query(queryText)
+//         .then((result) => {
+//             //send new task POST created status here
+//             res.sendStatus(201); 
+//         })
+//         //add error CATCH here
+//             .catch((error) => {
+//                 console.log('error making new task POST query: ', error);
+//                 //send server status error
+//                 res.sendStatus(error);
+//         });
+//     }
+//     if (title && status === 'no') {
+//         //add SQL insert as variable here
+//         const queryText = `
+//         UPDATE "tasks" SET "complete"='no' WHERE "task"='${title}' AND "id"=${idNo};
+//         `;
+//         console.log(`you are updating ${task} with ID number ${idNo} to incomplete`);
+    
+//         //make pool query to db here with SQL variable
+//             pool.query(queryText)
+//             .then((result) => {
+//                 //send new task POST created status here
+//                 res.sendStatus(201); 
+//             })
+//             //add error CATCH here
+//                 .catch((error) => {
+//                     console.log('error making new task POST query: ', error);
+//                     //send server status error
+//                     res.sendStatus(error);
+//             });
+//         }
+// });
+
+
+// -------------------------------------------------------------------------- PUT REQUESTS ------------------------------
+
+taskRouter.put('/complete/:id', (req, res) => {
+    console.log(`this task id is: ${req.params.id}`);
+    console.log(`task is complete: ${req.body.complete}`);
+
+    const id = req.params.id;
+    const complete = req.body.complete;
+
+        if (complete == 'no') {
+            //add SQL insert as variable here 
+            queryText = `
+            UPDATE "tasks" SET "complete"='yes' WHERE "id"=${id};
+            `;
+        } else if (complete == 'yes') {
+            //add SQL insert as variable here
+            queryText = `
+            UPDATE "tasks" SET "complete"='no' WHERE "id"=${id};
+            `;
+        } else {
+            res.sendStatus(500);
+            return;
         }
-});
+        pool.query(queryText)
+        .then((dbResponse) => {
+            console.log(`response from db: ${dbResponse}`);
+            res.sendStatus(200);
+        })
+        .catch((error) => {
+            console.log(error);
+            res.sendStatus(500);
+        })
+})
+
+
+
 
 
 // -------------------------------------------------------------------------- DELETE REQUESTS ------------------------------
