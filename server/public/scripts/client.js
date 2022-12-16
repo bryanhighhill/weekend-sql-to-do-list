@@ -12,14 +12,15 @@ function onReady() {
     $('#submit-task-btn').on('click', submitTask);
 
     //future task complete button function
-    $('#task-list').on('click', '.complete-btn', taskComplete);
+    $('#task-list').on('click', '.complete-btn', changeTaskStatus);
     //future task incomplete button function
-    $('#task-list').on('click', '.incomplete-btn', taskComplete);
+    $('#task-list').on('click', '.incomplete-btn', changeTaskStatus);
     //future delete button function
     $('#task-list').on('click', '.delete', taskDelete);
 };
 
-//-------------------------------------------------------------function to POST new task to server => db
+
+//---------------------------------------------function to POST new task to server => db
 
 function submitTask() {
     let newTask = $('#task-input').val();
@@ -52,7 +53,7 @@ function submitTask() {
         });
 };
 
-//----------------------------------------------------------------function to GET tasks from server/database
+//--------------------------------------function to GET tasks from server/database
 
 function getTasks(){
     $.ajax({
@@ -70,7 +71,7 @@ function getTasks(){
 };
 
 
-//------------------------------------------------------------------function to append task list to DOM
+//-----------------------------------------Function to append task list to DOM
 
 function appendToDom(taskTable){
     console.log(`about to append db table: ${taskTable}`);
@@ -78,7 +79,8 @@ function appendToDom(taskTable){
     
     // loop through table and append tasks to dom. add a COMPLETE and DELETE button
     for (let i=0; i < taskTable.length; i++) {
-        //if statement to check completion status - INCOMPLETE: assign it class of task-incomplete to target with CSS
+
+//if statement to check completion status - INCOMPLETE: assign it class of task-incomplete to target with CSS
         if(taskTable[i].complete === 'no') {
             $('#task-list').append(`
             <div class="task-incomplete">
@@ -90,14 +92,14 @@ function appendToDom(taskTable){
                     <br />
                     <br />
                     <button data-id="${taskTable[i].id}" class="complete-btn" data-status="${taskTable[i].complete}" data-title="${taskTable[i].task}">Mark as complete</button>
-                    <button id="${taskTable[i].id}" class="delete" data-title="${taskTable[i].task}">Remove Task</button>
+                    <button data-id="${taskTable[i].id}" class="delete" data-title="${taskTable[i].task}">Remove Task</button>
                     <br />
                     <br />
                 </div>
             </div>
         `)}
 
-        //if statement to check completion status - COMPLETE: assign it class of task-complete to target with CSS
+//if statement to check completion status - COMPLETE: assign it class of task-complete to target with CSS
         if(taskTable[i].complete === 'yes') {
             $('#task-list').append(`
             <div class="task-complete">
@@ -109,20 +111,20 @@ function appendToDom(taskTable){
                     <br />
                     <br />
                     <button data-id="${taskTable[i].id}" class="incomplete-btn" data-status="${taskTable[i].complete}" data-title="${taskTable[i].task}">Mark as incomplete</button>
-                    <button id="${taskTable[i].id}" class="delete" data-title="${taskTable[i].task}">Remove Task</button>
+                    <button data-id="${taskTable[i].id}" class="delete" data-title="${taskTable[i].task}">Remove Task</button>
                     <br />
                     <br />     
                 </div>
             </div>
             `)
-        }
+        };
     };
-};
-
-//-----------------------------------------------------------------create Task Completed button function
+}
 
 
-function taskComplete() {
+//----------------------------------------- create Change Task Status button function
+
+function changeTaskStatus() {
     console.log(`clicked button to update completion status of task: "${$(this).data('title')}" with id: ${$(this).data('id')}, to complete`);
   
     //set variables 
@@ -151,66 +153,31 @@ function taskComplete() {
     });
 };
 
-//create Task Completed button function
-// function taskIncomplete() {
-//     console.log(`clicked button to update completion status of task: ${this.title} to incomplete`);
- 
-//     //set task to update to variable
-//     const updateTask = (this).title;
-//     const taskId = (this).id;
-//     console.log(`test of updateTask variable: ${updateTask}`);
-//     console.log(`test of updateTask id: ${taskId}`);
 
-//     //make POST request to update completion status on db
-//     $.ajax({
-//         method: 'POST',
-//         url: '/tasks',
-//         //create new task object here
-//         data: {
-//             title: updateTask,
-//             //have new task default be incomplete
-//             complete:'no',
-//             idNo: taskId,
-//         }
-//     }).then(function(response){
-//         console.log('revert task to incomplete POST response from the server: ', response);
-        
-//         //GET updated tasks here
-//         getTasks();
-       
-//     //add error catch
-//     }).catch(function(error){
-//         alert(error.responseText);
-//         console.log(error);
-//     });
-// };
+// ------------------------------------------------- Create task DELETE button function
 
-//creat task DELETE function
 function taskDelete() {
     console.log(`you want to delete ${this.title} with ID no: ${this.id}`);
 
-    const deleteTask = (this).title;
-    const taskId = (this).id;
+    const id = $(this).data('id');
+    const task = $(this).data('title');
 
     //make DELETE request to delete task from db
     $.ajax({
         method: 'DELETE',
-        url: '/tasks', //'/tasks/:id
+        url: `/tasks/${id}`,
         // create new task object here
-        data: {
-            title: deleteTask,
-            idNo: taskId,
-        }
+       
         // success: getTasks(),
     }).then(function(response){
-        console.log('revert task to incomplete POST response from the server: ', response);
+        console.log(`DELETE response from DB: ${response}`);
         
         // GET updated tasks here
         getTasks();
        
     // add error catch
     }).catch(function(error){
-        alert(error.responseText);
-        console.log(error);
-    });
-};
+        alert(error);
+        console.log(`error with deleting: ${error}`);
+    })
+}
