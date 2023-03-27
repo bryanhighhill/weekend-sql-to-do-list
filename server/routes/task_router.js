@@ -34,6 +34,11 @@ taskRouter.post('/', function (req, res) {
      //make variables for req.body
      const task = req.body.task;
      const status = req.body.complete;
+
+     if (req.body.task == "drop table;") {
+     return 
+}
+
          
     //add SQL insert as variable here - SANITIZE!
     const queryText = `
@@ -44,6 +49,7 @@ taskRouter.post('/', function (req, res) {
     pool.query(queryText, [task, status])
     .then((result) => {
         //send new task POST created status here
+        // res.send("HEY IM TESTING SOMETHING")
         res.sendStatus(201); 
     })
     //add error CATCH here
@@ -67,18 +73,18 @@ taskRouter.post('/', function (req, res) {
      if (complete == 'no') {
          //add SQL insert as variable here 
          queryText = `
-         UPDATE "tasks" SET "complete"='yes' WHERE "id"=${id};
+         UPDATE "tasks" SET "complete"='yes' WHERE "id"=$1;
          `;
         } else if (complete == 'yes') {
             //add SQL insert as variable here
             queryText = `
-            UPDATE "tasks" SET "complete"='no' WHERE "id"=${id};
+            UPDATE "tasks" SET "complete"='no' WHERE "id"=$1;
             `;
         } else {
             res.sendStatus(500);
             return;
         }
-        pool.query(queryText)
+        pool.query(queryText, [id])
         .then((dbResponse) => {
             console.log(`response from db: ${dbResponse}`);
             res.sendStatus(200);
